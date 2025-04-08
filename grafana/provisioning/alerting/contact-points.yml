@@ -7,12 +7,12 @@ contactPoints:
       - uid: email-recipient
         type: email
         settings:
-          addresses: uno1victor@hotmail.com
+          addresses: uno1victor@gmail.com
       - uid: slack-recipient
         type: slack
         settings:
           recipient: '#botalerts'
-          url: https://hooks.slack.com/services/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
+          url: ${SLACK_WEBHOOK_URL}
           username: 'GrafanaBot'
 
   - orgId: 1

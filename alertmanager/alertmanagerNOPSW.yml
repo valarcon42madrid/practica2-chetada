@@ -5,7 +5,7 @@ global:
   smtp_auth_password: '${SMTP_PASSWORD}'
 
 route:
-  receiver: grafana-only
+  receiver: firing-only
   group_wait: 10s
   group_interval: 30s
   repeat_interval: 1h
@@ -17,16 +17,23 @@ route:
 
     - match:
         severity: warning
-      receiver: grafana-only
+      receiver: firing-only
 
 receivers:
-  - name: grafana-only
+  - name: firing-only
 
   - name: email-slack
-    email_configs:
-      - to: 'uno1victor@hotmail.com'
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
+      - api_url: '${SLACK_WEBHOOK_URL}'
         channel: '#botalerts'
         send_resolved: true
         username: 'AlertmanagerBot'
+    email_configs:
+      - to: 'uno1victor@hotmail.com'
+        send_resolved: true
+        from: 'uno1victor@gmail.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'uno1victor@gmail.com'
+        auth_password: '${SMTP_PASSWORD}'
+        require_tls: true
+

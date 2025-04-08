@@ -37,7 +37,8 @@ services:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning/alerting:/etc/grafana/provisioning/alerting
-        #- ./grafana-storage:/var/lib/grafana
+      - ./grafana-storage:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/dashboards
     environment:
       - GF_SMTP_ENABLED=true
       - GF_SMTP_HOST=smtp.gmail.com:587
@@ -45,6 +46,7 @@ services:
       - GF_SMTP_PASSWORD=${SMTP_PASSWORD}
       - GF_SMTP_FROM_ADDRESS=uno1victor@gmail.com
       - GF_SMTP_FROM_NAME=Grafana
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
     depends_on:
       - prometheus
 
@@ -70,3 +72,4 @@ services:
       - ./alertmanager:/etc/alertmanager
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
+
