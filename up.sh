@@ -1,10 +1,13 @@
 #!/bin/bash
+
 set -e  # Corta si algo falla
 
-# ✅ Cargar variables del archivo .env
+# ✅ Cargar variables del archivo .env (respetando espacios y comillas)
 if [ -f .env ]; then
   echo "🔄 Cargando variables desde .env"
-  export $(grep -v '^#' .env | xargs)
+  set -a
+  source .env
+  set +a
 else
   echo "❌ Archivo .env no encontrado"
   exit 1
@@ -14,9 +17,6 @@ fi
 echo "📦 Variables cargadas:"
 echo "SMTP_PASSWORD=${SMTP_PASSWORD:0:4}********"
 echo "SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:0:30}..."
-
-# ✅ Borrar archivo generado al salir
-#trap "echo '🧹 Limpiando archivo alertmanager.yml'; rm -f alertmanager/alertmanager.yml" EXIT
 
 # ✅ Generar alertmanager.yml desde plantilla
 echo "🛠 Generando alertmanager.yml desde plantilla..."
