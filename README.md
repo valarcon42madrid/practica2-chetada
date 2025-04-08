@@ -6,17 +6,16 @@ Incluye:
 
 - 🔁 Tres servicios de prueba (`prometheus-service-demo-{0,1,2}`)
 - 📈 Prometheus para la recolección de métricas
-- 📊 Grafana para visualización de dashboards
+- 📊 Grafana para visualización de dashboards y avisar si falla alertmanager.
 - 🖥️ Node Exporter para métricas del sistema anfitrión
-
+- Xp  Alertmanager para montar un sistema de alarmas junto a Grafana.
 ---
 
 ## 🚀 Puesta en marcha
 
 Levantar todos los servicios:
 
-```bash
-docker-compose up -d
+```./up.sh
 ```
 
 Esto inicia:
@@ -29,6 +28,7 @@ Esto inicia:
 | Prometheus                      | `localhost:9090`  |
 | Grafana                         | `localhost:3000`  |
 | Node Exporter                   | `localhost:9100`  |
+| Alertmanager                                 9093
 
 > 🧑‍💻 **Grafana**: Usuario `admin` / Contraseña `admin`
 
@@ -69,6 +69,52 @@ Y se cargan automáticamente mediante la configuración de **provisioning**.
   - 🔴 Crítico a partir del 90%
 
 ---
+🚨 Sistema de Alertas
+
+* La idea es que solo me avise si dejan de funcionar alguna de las alarmas; si deja de funcionar algún demo salta una alarma sin relevancia... (pensé en enviar al correo de Julius las alarmas de las demos, pero habría estado feo)
+
+✔️ Alertas desde Prometheus (via Alertmanager)
+Reglas definidas en:
+
+prometheus/alert.rules.yml
+
+Y notificadas a través de Alertmanager, con rutas por severidad:
+
+severity: warning → receptor firing-only
+
+severity: critical → receptor email-slack
+
+👉 Alertmanager envía a:
+
+📬 Correo ()
+
+💬 Slack (#botalerts)
+
+✔️ Alertas desde Grafana
+Alertas definidas en la UI de Grafana o provisionadas desde:
+
+grafana/provisioning/alerting/
+Con rutas personalizadas hacia los mismos destinos (correo y Slack).
+
+🔐 Variables sensibles
+Algunos secretos están gestionados con .env:
+
+SMTP_PASSWORD=contraseña_o_token_gmail
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+
+🧽 Limpieza
+Para detener y limpiar completamente el entorno, ejecuta:
+
+./down.sh
+
+Esto:
+
+Detiene y borra los contenedores y volúmenes
+
+Elimina alertmanager/alertmanager.yml
+
+Borra el contenido interno de grafana-storage/
+
 
 ## ❗ Dificultades encontradas
 
@@ -104,12 +150,9 @@ Para solucionar esto, se añadieron los siguientes volúmenes y parámetros al `
 
 De este modo, `node-exporter` accede correctamente a los datos del sistema anfitrión.
 
----
+### 🔸 3. El token del correo y de Slack
 
-## ✅ Requisitos
-
-- Docker + Docker Compose instalados
-- Sistema con acceso a puertos: `10000`, `20000`, `30000`, `9090`, `9100`, `3000`
+Aunque el hook de Slack da a un grupo de prueba que solo me tiene a mi, si se sube a github se chapa automáticamente... y hay que hacer otro. Respecto de automatizar el envío desde el correo (en mi caso usé gmail), el token que se usa en el campo password si se usa desde una aplicación, te lo chapan solo por "uso sospechoso" (definido como ejecuciones múltiples desde contenedores, entre otras) y tienes que hacer otro...
 
 ---
 
@@ -128,8 +171,6 @@ done
 
 Esto activa las métricas `demo_api_request_duration_seconds_*` necesarias para los dashboards.
 
+
+***Si quieres probar las notificaciones te cambias los correos y usas tu token... El de slack me lo puedes pedir si eres colegita y así somos dos en mi dominio de pruebas ;D (hay canales para todos ;D)
 ---
-
-## 🧾 Licencia
-
-Este proyecto es parte de una práctica educativa. Libre de uso con fines formativos.
