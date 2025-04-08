@@ -98,11 +98,15 @@ Alertas definidas en la UI de Grafana o provisionadas desde:
 grafana/provisioning/alerting/
 Con rutas personalizadas hacia los mismos destinos (correo y Slack).
 
+---
+
 🔐 Variables sensibles
 Algunos secretos están gestionados con .env:
 
-SMTP_PASSWORD=contraseña_o_token_gmail
-SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
+SMTP_PASSWORD="contraseña_o_token_gmail"
+SLACK_WEBHOOK_URL="https://hooks.slack.com/services/..."
+
+---
 
 🧽 Limpieza
 Para detener y limpiar completamente el entorno, ejecuta:
