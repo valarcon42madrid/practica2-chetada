@@ -28,7 +28,7 @@ Esto inicia:
 | Prometheus                      | `localhost:9090`  |
 | Grafana                         | `localhost:3000`  |
 | Node Exporter                   | `localhost:9100`  |
-| Alertmanager                                 9093
+| Alertmanager                    | `localhost:9093`  |
 
 > 🧑‍💻 **Grafana**: Usuario `admin` / Contraseña `admin`
 

@@ -17,7 +17,7 @@ groups:
             model:
               expr: count(up{job="alertmanager"} == 0) > 0
               refId: A
-        for: 1m
+        for: 3m
         annotations:
           summary: "⚠️ Alertmanager no responde"
           description: "Prometheus no puede scrappear alertmanager"

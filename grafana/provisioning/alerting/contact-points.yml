@@ -7,7 +7,7 @@ contactPoints:
       - uid: email-recipient
         type: email
         settings:
-          addresses: uno1victor@gmail.com
+          addresses: uno1victor@hotmail.com
       - uid: slack-recipient
         type: slack
         settings:
