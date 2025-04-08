@@ -1,0 +1,21 @@
+groups:
+  - name: demo-alerts
+    rules:
+      - alert: DemoServiceDown
+        expr: up{job="prometheus-service-demo"} == 0 or absent(up{job="prometheus-service-demo"})
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "⚠️ Demo service está caído"
+          description: "El servicio demo no responde o no expone métricas."
+
+      - alert: GrafanaDown
+        expr: up{job="grafana"} == 0 or absent(up{job="grafana"})
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "🚨 ¡ALERTA! Grafana no responde"
+          description: "Prometheus no puede alcanzar Grafana o no expone métricas."
+

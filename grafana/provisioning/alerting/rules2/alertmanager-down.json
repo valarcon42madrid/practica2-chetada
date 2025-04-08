@@ -1,0 +1,31 @@
+{
+  "name": "AlertmanagerDown",
+  "condition": "A",
+  "data": [
+    {
+      "refId": "A",
+      "queryType": "",
+      "datasourceUid": "prom-main",
+      "relativeTimeRange": {
+        "from": 300,
+        "to": 0
+      },
+      "model": {
+        "expr": "absent(up{job=\"alertmanager\"}) OR up{job=\"alertmanager\"} == 0",
+        "interval": "",
+        "legendFormat": "",
+        "refId": "A"
+      }
+    }
+  ],
+  "noDataState": "Alerting",
+  "execErrState": "Alerting",
+  "for": "30s",
+  "labels": {
+    "severity": "critical"
+  },
+  "annotations": {
+    "summary": "Alertmanager está caído",
+    "description": "No se detecta conexión con el componente Alertmanager."
+  }
+}

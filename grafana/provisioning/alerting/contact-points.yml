@@ -1,0 +1,25 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: grafana-default-email
+    receivers:
+      - uid: email-recipient
+        type: email
+        settings:
+          addresses: uno1victor@hotmail.com
+      - uid: slack-recipient
+        type: slack
+        settings:
+          recipient: '#botalerts'
+          url: https://hooks.slack.com/services/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
+          username: 'GrafanaBot'
+
+  - orgId: 1
+    name: GrafanaOnly
+    receivers: []
+
+  - orgId: 1
+    name: grafana-default
+    receivers: []
+

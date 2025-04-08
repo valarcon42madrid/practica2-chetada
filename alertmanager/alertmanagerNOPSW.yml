@@ -1,0 +1,32 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'uno1victor@gmail.com'
+  smtp_auth_username: 'uno1victor@gmail.com'
+  smtp_auth_password: '${SMTP_PASSWORD}'
+
+route:
+  receiver: grafana-only
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1h
+  routes:
+    - match:
+        severity: critical
+      receiver: email-slack
+      continue: true
+
+    - match:
+        severity: warning
+      receiver: grafana-only
+
+receivers:
+  - name: grafana-only
+
+  - name: email-slack
+    email_configs:
+      - to: 'uno1victor@hotmail.com'
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/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'
+        channel: '#botalerts'
+        send_resolved: true
+        username: 'AlertmanagerBot'

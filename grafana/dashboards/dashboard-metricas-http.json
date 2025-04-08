@@ -1,6 +1,7 @@
 {
   "uid": "metricas-http",
   "title": "Métricas HTTP",
+  "folder": "HTTP Métricas",
   "schemaVersion": 30,
   "version": 1,
   "refresh": "5s",

@@ -17,3 +17,19 @@ scrape_configs:
           - prometheus-service-demo-1:8080
           - prometheus-service-demo-2:8080
 
+  - job_name: 'alertmanager'
+    static_configs:
+      - targets: ['alertmanager:9093']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+
+rule_files:
+  - "alert.rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+

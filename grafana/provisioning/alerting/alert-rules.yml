@@ -1,0 +1,26 @@
+apiVersion: 1
+groups:
+  - name: demo-alerts
+    folder: rules2
+    interval: 1m
+    rules:
+      - uid: alertmanager-down
+        title: AlertmanagerDown
+        condition: A
+        data:
+          - refId: A
+            queryType: instant
+            datasourceUid: prom-main
+            relativeTimeRange:
+              from: 180
+              to: 0
+            model:
+              expr: count(up{job="alertmanager"} == 0) > 0
+              refId: A
+        for: 1m
+        annotations:
+          summary: "⚠️ Alertmanager no responde"
+          description: "Prometheus no puede scrappear alertmanager"
+        labels:
+          severity: critical
+
