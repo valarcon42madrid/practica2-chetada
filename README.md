@@ -19,6 +19,7 @@ Levantar todos los servicios:
 ./up.sh
 ```
 (recuerde crear su propio .env y modificar el correo en los archivos contact...yml de grafana y alertmanagerNOPSW.yml)
+
 Esto inicia:
 
 | Servicio                        | Puerto        |
